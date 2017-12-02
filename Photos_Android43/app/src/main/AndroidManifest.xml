@@ -19,6 +19,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".SingleAlbumHomepage"
+            android:label="@string/title_activity_single_album_homepage"
+            android:parentActivityName=".UserHomepage"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.photos_android.photos_android43.UserHomepage" />
+        </activity>
     </application>
 
 </manifest>
