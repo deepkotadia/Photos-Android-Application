@@ -29,4 +29,30 @@ public class PhotoAlbumManager implements Serializable {
         return albums;
     }
 
+    /**
+     * serialize
+     * Serialize the userdata and write it in albums.dat file
+     *
+     * @param userdata - all all albums, photos, and tags info to be serialized
+     */
+    public static void serialize(PhotoAlbumManager userdata) throws IOException {
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("albums.dat"));
+        oos.writeObject(userdata);
+        oos.close();
+    }
+
+
+    /**
+     * deserialize
+     * Read the userdata from albums.dat file and deserialize it
+     *
+     * @return userdata - albums of user
+     */
+    public static PhotoAlbumManager deserialize() throws IOException, ClassNotFoundException {
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream("albums.dat"));
+        PhotoAlbumManager userdata = (PhotoAlbumManager) ois.readObject();
+        ois.close();
+        return userdata;
+    }
+
 }
