@@ -16,8 +16,10 @@ public class UserHomepage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         albums.add("Deep");
         albums.add("Chinmoyi");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_homepage);
+
         testList = (ListView) findViewById(R.id.albumsList);
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,R.layout.activity_albums_list_view,
