@@ -31,7 +31,7 @@ public class Photo implements Serializable {
     }
 
 
-    public String getPhotoPath() {
+    public String getphotoPath() {
         return photoPath;
     }
 
