@@ -1,6 +1,8 @@
 package com.photos_android.photos_android43;
 
 import android.content.Context;
+import android.support.annotation.XmlRes;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -24,6 +26,8 @@ public class UserHomepage extends AppCompatActivity {
     ListView testList;
     //private static List<Album> albums = new ArrayList<Album>();
     private static List<String> albums = new ArrayList<String>();
+
+    FloatingActionButton addAlbumBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
