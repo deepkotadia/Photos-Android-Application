@@ -61,6 +61,8 @@ public class UserHomepage extends AppCompatActivity {
                             public void onClick(DialogInterface dialogBox, int id) {
                                 // ToDo get user input here
                                 String albumName = albumNameFromDialogBox.getText().toString();
+
+
                                 //create an album and add it to the list of albums
                             }
                         })
