@@ -14,6 +14,7 @@ public class Album implements Serializable {
 
     private String albumName;
     private List<Photo> photos;
+    private Photo currentPhoto;
 
 
     /**
@@ -37,6 +38,31 @@ public class Album implements Serializable {
 
     public List<Photo> getPhotos() {
         return photos;
+    }
+
+    /**
+     * to add a photo to an album
+     * @param photoPath  file path of the photo
+     */
+    public void addPhoto(String photoPath) {
+        Photo newPhoto = new Photo(photoPath);
+        photos.add(newPhoto);
+    }
+
+    /**
+     * to remove a photo from a list of photos at a given index
+     * @param photoIndex        index of the photo to remove
+     */
+    public void removePhoto(int photoIndex) {
+        photos.remove(photoIndex);
+    }
+
+    public Photo getcurrentPhoto() {
+        return currentPhoto;
+    }
+
+    public void setcurrentPhoto(Photo currentPhoto) {
+        this.currentPhoto = currentPhoto;
     }
 
 
