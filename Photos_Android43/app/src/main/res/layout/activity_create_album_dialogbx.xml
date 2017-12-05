@@ -29,7 +29,7 @@
         android:id="@+id/userInputDialog"
         android:layout_width="264dp"
         android:layout_height="wrap_content"
-        android:hint="Enter Something"
+        android:hint="Enter name of album"
         android:layout_marginStart="41dp"
         android:inputType="text"
         android:textAlignment="viewStart" />

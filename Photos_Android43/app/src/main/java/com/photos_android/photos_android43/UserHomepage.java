@@ -28,6 +28,7 @@ public class UserHomepage extends AppCompatActivity {
 
     private FloatingActionButton addAlbumBtn;
     final Context c = this;
+    final EditText albumNameFromDialogBox = (EditText) findViewById(R.id.userInputDialog);
 
     public static PhotoAlbumManager manager = new PhotoAlbumManager();
     File albumsfile = new File("/data/data/com.photos_android.photos_android43/files/albums.dat");
@@ -59,6 +60,7 @@ public class UserHomepage extends AppCompatActivity {
                         .setPositiveButton("Create", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialogBox, int id) {
                                 // ToDo get user input here
+                                String albumName = albumNameFromDialogBox.getText().toString();
                                 //create an album and add it to the list of albums
                             }
                         })
