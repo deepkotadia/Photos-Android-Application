@@ -28,22 +28,53 @@ public class UserHomepage extends AppCompatActivity {
 
     private FloatingActionButton addAlbumBtn;
     final Context c = this;
-    final EditText albumNameFromDialogBox = (EditText) findViewById(R.id.userInputDialog);
+    //final EditText albumNameFromDialogBox = new EditText(this);
+    String albumName;
 
     public static PhotoAlbumManager manager = new PhotoAlbumManager();
     File albumsfile = new File("/data/data/com.photos_android.photos_android43/files/albums.dat");
     ListView testList;
-    //private static List<Album> albums = new ArrayList<Album>();
     private static List<String> albums = new ArrayList<String>();
+    private ArrayAdapter<String> arrayAdapter;
+    //private static List<String> albums = new ArrayList<String>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        albums.add("Deep");
-        albums.add("Chinmoyi");
+        //albums.add("Deep");
+        //albums.add("Chinmoyi");
+
+        try {
+            manager = PhotoAlbumManager.deserialize();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_homepage);
+
+
+        /*
+        When app starts for first time, albums.dat will not exist
+        so need to create it
+         */
+        if(!albumsfile.exists()) {
+            Context context = this;
+            File file = new File(context.getFilesDir(), "albums.dat");
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+
+            }
+        }
+
+        populateAlbumList();
+        testList = (ListView) findViewById(R.id.albumsList);
+        arrayAdapter = new ArrayAdapter<String>(this, R.layout.activity_albums_list_view, R.id.textView, albums);
+        testList.setAdapter(arrayAdapter);
+
 
         addAlbumBtn = (FloatingActionButton) findViewById(R.id.addAlbumBtn);
         addAlbumBtn.setOnClickListener (new View.OnClickListener(){
@@ -53,15 +84,30 @@ public class UserHomepage extends AppCompatActivity {
                 View mView = layoutInflaterAndroid.inflate(R.layout.activity_create_album_dialogbx, null);
                 AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(c);
                 alertDialogBuilderUserInput.setView(mView);
-
-                final EditText userInputDialogEditText = (EditText) mView.findViewById(R.id.userInputDialog);
+                final EditText albumNamefromDialog = (EditText) mView.findViewById(R.id.userInputDialog);
                 alertDialogBuilderUserInput
                         .setCancelable(false)
                         .setPositiveButton("Create", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialogBox, int id) {
-                                // ToDo get user input here
-                                String albumName = albumNameFromDialogBox.getText().toString();
                                 //create an album and add it to the list of albums
+                                //albumNameFromDialogBox = (EditText) findViewById(R.id.userInputDialog);
+                                albumName = albumNamefromDialog.getText().toString();
+                                Album newAlbum = new Album(albumName);
+                                manager.addAlbum(newAlbum);
+
+                                //serialize and refresh list
+                                try {
+                                    PhotoAlbumManager.serialize(manager);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+                                testList = (ListView) findViewById(R.id.albumsList);
+                                populateAlbumList();
+                                arrayAdapter.notifyDataSetChanged();
+                                testList.setAdapter(arrayAdapter);
+                                //refreshing ends here
+
                             }
                         })
 
@@ -77,39 +123,17 @@ public class UserHomepage extends AppCompatActivity {
             }
         });
 
-        /*
-        When app starts for first time, albums.dat will not exist
-        so need to create it
-         */
-        if(!albumsfile.exists()) {
-            //albums.add("Sesh");
-            Context context = this;
-            File file = new File(context.getFilesDir(), "albums.dat");
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-
-            }
-        }
-
-        //populateAlbumList();
-
-
-        testList = (ListView) findViewById(R.id.albumsList);
-        //ArrayAdapter<Album> arrayAdapter = new ArrayAdapter<Album>(this, R.layout.activity_albums_list_view, R.id.textView, albums);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.activity_albums_list_view, R.id.textView, albums);
-        testList.setAdapter(arrayAdapter);
     }
 
     /**
      * Populates the list of Albums for the user
      */
-    /*private static void populateAlbumList() {
+    private static void populateAlbumList() {
         albums.clear();
 
         for(int i = 0; i < manager.getAlbums().size(); i++) {
-            albums.add(manager.getAlbums().get(i));
+            albums.add(manager.getAlbums().get(i).getAlbumName());
         }
-    }*/
+    }
 
 }
