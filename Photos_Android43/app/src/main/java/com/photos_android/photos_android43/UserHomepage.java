@@ -6,12 +6,15 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.view.LayoutInflater;
 import android.support.v7.app.AlertDialog;
 import android.widget.EditText;
 import android.content.DialogInterface;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,6 +30,7 @@ import model.PhotoAlbumManager;
 public class UserHomepage extends AppCompatActivity {
 
     private FloatingActionButton addAlbumBtn;
+    private Spinner spinner;
     final Context c = this;
     //final EditText albumNameFromDialogBox = new EditText(this);
     String albumName;
@@ -41,8 +45,6 @@ public class UserHomepage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //albums.add("Deep");
-        //albums.add("Chinmoyi");
 
         try {
             manager = PhotoAlbumManager.deserialize();
@@ -121,6 +123,99 @@ public class UserHomepage extends AppCompatActivity {
 
                 AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
                 alertDialogAndroid.show();
+            }
+        });
+
+        spinner = (Spinner) findViewById(R.id.spinner3);
+        ArrayAdapter<CharSequence> itemAdapter = ArrayAdapter.createFromResource(this, R.array.album_options,android.R.layout.simple_spinner_item);
+        itemAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(itemAdapter);
+        spinner.setVisibility(View.GONE); //initially, the spinner does not appear
+
+        testList.setLongClickable(true);
+        testList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                spinner.setVisibility(View.VISIBLE);
+
+                final int indexOfAlbum = i;
+
+                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                        if(i == 0) { //rename selected
+
+                            LayoutInflater layoutInflaterAndroid = LayoutInflater.from(c);
+                            View mView = layoutInflaterAndroid.inflate(R.layout.activity_create_album_dialogbx, null);
+                            AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(c);
+                            alertDialogBuilderUserInput.setView(mView);
+                            final EditText albumNameinDialog = (EditText) mView.findViewById(R.id.userInputDialog);
+                            albumNameinDialog.setText(manager.getAlbums().get(indexOfAlbum).getAlbumName());
+                            alertDialogBuilderUserInput
+                                    .setCancelable(false)
+                                    .setPositiveButton("Create", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialogBox, int id) {
+                                            String newname = albumNameinDialog.getText().toString();
+                                            manager.getAlbums().get(indexOfAlbum).setAlbumName(newname);
+
+                                            //serialize and refresh list
+                                            try {
+                                                PhotoAlbumManager.serialize(manager);
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
+
+                                            testList = (ListView) findViewById(R.id.albumsList);
+                                            populateAlbumList();
+                                            arrayAdapter.notifyDataSetChanged();
+                                            testList.setAdapter(arrayAdapter);
+                                            //refreshing ends here
+
+                                            Toast.makeText(UserHomepage.this, "Album Successfully Renamed", Toast.LENGTH_LONG).show();
+
+                                        }
+                                    })
+
+                                    .setNegativeButton("Cancel",
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialogBox, int id) {
+                                                    dialogBox.cancel();
+                                                }
+                                            });
+
+                            AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
+                            alertDialogAndroid.show();
+
+                        }
+
+                        else if(i == 1) { //delete selected
+                            manager.removeAlbum(indexOfAlbum);
+                            //serialize and refresh list
+                            try {
+                                PhotoAlbumManager.serialize(manager);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            testList = (ListView) findViewById(R.id.albumsList);
+                            populateAlbumList();
+                            arrayAdapter.notifyDataSetChanged();
+                            testList.setAdapter(arrayAdapter);
+                            //refreshing ends here
+                            Toast.makeText(UserHomepage.this, "Album Successfully Deleted", Toast.LENGTH_LONG).show();
+                        }
+
+                        spinner.setVisibility(View.GONE); //hide the spinner
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
+
+                return true;
             }
         });
 
