@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.support.v7.app.AlertDialog;
 import android.widget.EditText;
 import android.content.DialogInterface;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -87,13 +88,13 @@ public class UserHomepage extends AppCompatActivity {
                 AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(c);
                 alertDialogBuilderUserInput.setView(mView);
                 final EditText albumNamefromDialog = (EditText) mView.findViewById(R.id.userInputDialog);
+
                 alertDialogBuilderUserInput
                         .setCancelable(false)
                         .setPositiveButton("Create", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialogBox, int id) {
                                 String albumName = albumNamefromDialog.getText().toString();
                                 //create an album and add it to the list of albums
-                                //albumNameFromDialogBox = (EditText) findViewById(R.id.userInputDialog);
                                 albumName = albumNamefromDialog.getText().toString();
                                 Album newAlbum = new Album(albumName);
                                 manager.addAlbum(newAlbum);
@@ -150,11 +151,13 @@ public class UserHomepage extends AppCompatActivity {
                             View mView = layoutInflaterAndroid.inflate(R.layout.activity_create_album_dialogbx, null);
                             AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(c);
                             alertDialogBuilderUserInput.setView(mView);
+                            TextView title = (TextView) mView.findViewById(R.id.title);
+                            title.setText("Rename Album");
                             final EditText albumNameinDialog = (EditText) mView.findViewById(R.id.userInputDialog);
                             albumNameinDialog.setText(manager.getAlbums().get(indexOfAlbum).getAlbumName());
                             alertDialogBuilderUserInput
                                     .setCancelable(false)
-                                    .setPositiveButton("Create", new DialogInterface.OnClickListener() {
+                                    .setPositiveButton("Rename", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialogBox, int id) {
                                             String newname = albumNameinDialog.getText().toString();
                                             manager.getAlbums().get(indexOfAlbum).setAlbumName(newname);
@@ -172,7 +175,7 @@ public class UserHomepage extends AppCompatActivity {
                                             testList.setAdapter(arrayAdapter);
                                             //refreshing ends here
 
-                                            Toast.makeText(UserHomepage.this, "Album Successfully Renamed", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(UserHomepage.this, "Album Successfully Renamed", Toast.LENGTH_SHORT).show();
 
                                         }
                                     })
@@ -203,7 +206,7 @@ public class UserHomepage extends AppCompatActivity {
                             arrayAdapter.notifyDataSetChanged();
                             testList.setAdapter(arrayAdapter);
                             //refreshing ends here
-                            Toast.makeText(UserHomepage.this, "Album Successfully Deleted", Toast.LENGTH_LONG).show();
+                            Toast.makeText(UserHomepage.this, "Album Successfully Deleted", Toast.LENGTH_SHORT).show();
                         }
 
                         spinner.setVisibility(View.INVISIBLE); //hide the spinner
