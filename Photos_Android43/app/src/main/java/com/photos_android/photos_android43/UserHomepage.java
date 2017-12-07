@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.support.v7.app.AlertDialog;
 import android.widget.EditText;
 import android.content.DialogInterface;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.io.File;
@@ -24,13 +23,14 @@ import java.io.IOException;
 import java.util.*;
 
 import model.Album;
+import model.MySpinner;
 import model.PhotoAlbumManager;
 
 
 public class UserHomepage extends AppCompatActivity {
 
     private FloatingActionButton addAlbumBtn;
-    private Spinner spinner;
+    private MySpinner spinner;
     final Context c = this;
     //final EditText albumNameFromDialogBox = new EditText(this);
     String albumName;
@@ -126,11 +126,11 @@ public class UserHomepage extends AppCompatActivity {
             }
         });
 
-        spinner = (Spinner) findViewById(R.id.spinner3);
+        spinner = (MySpinner) findViewById(R.id.spinner3);
         ArrayAdapter<CharSequence> itemAdapter = ArrayAdapter.createFromResource(this, R.array.album_options,android.R.layout.simple_spinner_item);
         itemAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(itemAdapter);
-        spinner.setVisibility(View.GONE); //initially, the spinner does not appear
+        spinner.setVisibility(View.INVISIBLE); //initially, the spinner does not appear
 
         testList.setLongClickable(true);
         testList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -140,7 +140,7 @@ public class UserHomepage extends AppCompatActivity {
 
                 final int indexOfAlbum = i;
 
-                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                spinner.setOnItemSelectedEvenIfUnchangedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
@@ -206,7 +206,7 @@ public class UserHomepage extends AppCompatActivity {
                             Toast.makeText(UserHomepage.this, "Album Successfully Deleted", Toast.LENGTH_LONG).show();
                         }
 
-                        spinner.setVisibility(View.GONE); //hide the spinner
+                        spinner.setVisibility(View.INVISIBLE); //hide the spinner
                     }
 
                     @Override
