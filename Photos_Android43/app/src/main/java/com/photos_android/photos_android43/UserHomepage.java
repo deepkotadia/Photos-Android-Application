@@ -144,7 +144,7 @@ public class UserHomepage extends AppCompatActivity {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                        if(i == 0) { //rename selected
+                        if(i == 1) { //rename selected
 
                             LayoutInflater layoutInflaterAndroid = LayoutInflater.from(c);
                             View mView = layoutInflaterAndroid.inflate(R.layout.activity_create_album_dialogbx, null);
@@ -189,7 +189,7 @@ public class UserHomepage extends AppCompatActivity {
 
                         }
 
-                        else if(i == 1) { //delete selected
+                        else if(i == 2) { //delete selected
                             manager.removeAlbum(indexOfAlbum);
                             //serialize and refresh list
                             try {
