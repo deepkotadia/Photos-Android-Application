@@ -8,4 +8,14 @@
         <item>Delete Album</item>
     </string-array>
 
+    <string-array name="tag_options">
+        <item>Add Tag</item>
+        <item> Delete Tag</item>
+    </string-array>
+
+    <string name="title"> Tag </string>
+    <string name="fwdbtntxt"> Next </string>
+    <string name="backbtntxt"> Prev </string>
+    <string name="desc"> slideshow display </string>
+
 </resources>

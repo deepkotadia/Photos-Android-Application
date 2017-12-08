@@ -18,10 +18,10 @@
         </activity>
         <activity
             android:name=".SingleAlbumPage"
-            android:parentActivityName=".UserHomepage"></activity>
-        <activity
-            android:name=".Slideshow"
-            android:parentActivityName=".SingleAlbumPage"></activity>
+            android:parentActivityName=".UserHomepage" />
+
+        <activity android:name=".Slideshow"
+            android:parentActivityName=".SingleAlbumPage" />
     </application>
 
 </manifest>
