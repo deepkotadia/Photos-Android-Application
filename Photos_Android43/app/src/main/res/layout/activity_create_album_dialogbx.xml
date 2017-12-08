@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="380dp"
     android:orientation="vertical"
     android:padding="10dp"
     >
 
 
     <TextView
-        android:id="@+id/createAlbum"
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="41dp"
-        android:layout_marginTop="40dp"
+        android:layout_above="@+id/userInputDialog"
+        android:layout_alignStart="@+id/userInputDialog"
+        android:layout_marginBottom="30dp"
         android:fontFamily="monospace"
         android:text="Create Album"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -30,11 +28,12 @@
         android:id="@+id/userInputDialog"
         android:layout_width="264dp"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:hint="Enter name of album"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="41dp"
         android:inputType="text"
+        android:textSize="20dp"
         android:textAlignment="viewStart" />
 
 
-</LinearLayout>
+</RelativeLayout>

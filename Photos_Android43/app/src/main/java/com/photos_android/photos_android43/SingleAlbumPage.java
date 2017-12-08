@@ -11,15 +11,18 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import model.Photo;
+import model.PhotoAlbumManager;
 
 public class SingleAlbumPage extends AppCompatActivity {
 
     private static List<Photo> photosInAlbum = new ArrayList<Photo>();
     private FloatingActionButton addPhotoBtn;
+    private static final int READ_REQUEST_CODE = 42;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +34,6 @@ public class SingleAlbumPage extends AppCompatActivity {
 
         addPhotoBtn = (FloatingActionButton) findViewById(R.id.addPhotoBtn);
         addPhotoBtn.setOnClickListener(new View.OnClickListener() {
-
-            private static final int READ_REQUEST_CODE = 42;
 
             @Override
             public void onClick(View view) {
@@ -63,30 +64,40 @@ public class SingleAlbumPage extends AppCompatActivity {
                 startActivityForResult(intent, READ_REQUEST_CODE);
             }
 
-            //@Override
-            public void onActivityResult(int requestCode, int resultCode,
-                                         Intent resultData) {
-
-                // The ACTION_OPEN_DOCUMENT intent was sent with the request code
-                // READ_REQUEST_CODE. If the request code seen here doesn't match, it's the
-                // response to some other intent, and the code below shouldn't run at all.
-
-                if (requestCode == READ_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-                    // The document selected by the user won't be returned in the intent.
-                    // Instead, a URI to that document will be contained in the return intent
-                    // provided to this method as a parameter.
-                    // Pull that URI using resultData.getData().
-                    Uri uri = null;
-                    if (resultData != null) {
-                        uri = resultData.getData();
-                        String image_uri = uri.toString();
-                    }
-                }
-            }
-
-
         });
 
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
+
+        // The ACTION_OPEN_DOCUMENT intent was sent with the request code
+        // READ_REQUEST_CODE. If the request code seen here doesn't match, it's the
+        // response to some other intent, and the code below shouldn't run at all.
+
+        if (requestCode == READ_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            // The document selected by the user won't be returned in the intent.
+            // Instead, a URI to that document will be contained in the return intent
+            // provided to this method as a parameter.
+            // Pull that URI using resultData.getData().
+            Uri uri = null;
+            if (resultData != null) {
+                uri = resultData.getData();
+                String image_uri = uri.toString();
+                //At this point, we have the photopath, so add it in the current album
+                UserHomepage.manager.getcurrentAlbum().addPhoto(image_uri);
+
+                //serialize and refresh list
+                try {
+                    PhotoAlbumManager.serialize(UserHomepage.manager);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                populatePhotosList();
+                //refreshing ends here
+            }
+        }
     }
 
 
