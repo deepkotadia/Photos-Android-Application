@@ -16,7 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SingleAlbumPage"></activity>
+        <activity android:name=".SingleAlbumPage"
+            android:parentActivityName=".UserHomepage">
+        </activity>
     </application>
 
 </manifest>
