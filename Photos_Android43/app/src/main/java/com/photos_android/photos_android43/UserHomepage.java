@@ -234,6 +234,11 @@ public class UserHomepage extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+                //set onclicked album as current album
+                Album album = manager.getAlbums().get(i);
+                manager.setcurrentAlbum(album);
+
+                //launch the SingleAlbumPage with photos for current album
                 Intent singlealbum = new Intent(UserHomepage.this, SingleAlbumPage.class);
                 startActivity(singlealbum);
 
