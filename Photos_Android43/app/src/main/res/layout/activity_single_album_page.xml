@@ -20,11 +20,21 @@
         android:text="Delete Photo"
         android:visibility="invisible" />
 
+    <TextView
+        android:id="@+id/albumName"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:text="Name of Album comes here"
+        />
     <ListView
         android:id="@+id/photosList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
+        android:layout_below="@+id/deletePhotoBtn"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp">
 
