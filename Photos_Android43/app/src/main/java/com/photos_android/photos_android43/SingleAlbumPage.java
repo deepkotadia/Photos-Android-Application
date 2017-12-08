@@ -10,11 +10,15 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.ImageAdapter;
 import model.Photo;
 import model.PhotoAlbumManager;
 
@@ -31,6 +35,18 @@ public class SingleAlbumPage extends AppCompatActivity {
         setContentView(R.layout.activity_single_album_page);
 
         populatePhotosList();
+
+        GridView gridview = (GridView) findViewById(R.id.gridview);
+        gridview.setAdapter(new ImageAdapter(this));
+
+        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v,
+                                    int position, long id) {
+                Toast.makeText(SingleAlbumPage.this, "" + position,
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         addPhotoBtn = (FloatingActionButton) findViewById(R.id.addPhotoBtn);
         addPhotoBtn.setOnClickListener(new View.OnClickListener() {

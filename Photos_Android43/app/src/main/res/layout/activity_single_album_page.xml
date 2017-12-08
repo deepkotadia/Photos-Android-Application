@@ -30,16 +30,19 @@
         android:layout_alignParentLeft="true"
         android:text="Name of Album comes here"
         />
-    <ListView
-        android:id="@+id/photosList"
+    <GridView
+        android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/deletePhotoBtn"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+        android:columnWidth="90dp"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center"
+        android:layout_below="@+id/deletePhotoBtn">
 
-    </ListView>
+    </GridView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addPhotoBtn"
