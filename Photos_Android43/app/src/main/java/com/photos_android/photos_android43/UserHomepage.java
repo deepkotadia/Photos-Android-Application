@@ -1,6 +1,7 @@
 package com.photos_android.photos_android43;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.XmlRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -132,8 +133,11 @@ public class UserHomepage extends AppCompatActivity {
         itemAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(itemAdapter);
         spinner.setVisibility(View.INVISIBLE); //initially, the spinner does not appear
-
         testList.setLongClickable(true);
+
+        /*
+         * Long Click on Album Name to Rename or Delete Album
+         */
         testList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -219,6 +223,20 @@ public class UserHomepage extends AppCompatActivity {
                 });
 
                 return true;
+            }
+        });
+
+
+        /*
+         * Single Click on Album Name to Open an Album
+         */
+        testList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                Intent singlealbum = new Intent(UserHomepage.this, SingleAlbumPage.class);
+                startActivity(singlealbum);
+
             }
         });
 
