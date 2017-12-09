@@ -15,6 +15,20 @@
         android:layout_alignParentLeft="true"
         android:text="@string/searchBtnTxt"/>
 
+    <!--<TextView-->
+        <!--android:id="@+id/wlecomeText"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_gravity="left"-->
+        <!--android:layout_marginStart="12dp"-->
+        <!--android:layout_marginTop="12dp"-->
+        <!--android:text="Your Albums:"-->
+        <!--android:textColor="@android:color/holo_red_light"-->
+        <!--android:textSize="24sp"-->
+        <!--android:textStyle="bold" />-->
+
     <model.MySpinner
         android:id="@+id/spinner3"
         android:layout_width="50dp"
@@ -42,6 +56,6 @@
         android:clickable="true"
         android:focusable="true"
         app:backgroundTint="@color/colorPrimary"
-        app:srcCompat="@android:drawable/ic_input_add"/>
+        app:srcCompat="@android:drawable/ic_input_add" />
 
 </RelativeLayout>
