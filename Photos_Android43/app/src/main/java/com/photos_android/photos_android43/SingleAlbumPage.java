@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -33,6 +34,9 @@ public class SingleAlbumPage extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_album_page);
+
+        TextView AlbumNameText = (TextView) findViewById(R.id.albumName);
+        AlbumNameText.setText(UserHomepage.manager.getcurrentAlbum().getAlbumName());
 
         populatePhotosList();
 

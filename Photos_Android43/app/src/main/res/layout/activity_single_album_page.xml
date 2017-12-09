@@ -25,22 +25,28 @@
         android:id="@+id/albumName"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/gridview"
+        android:layout_alignParentStart="true"
         android:layout_gravity="left"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:text="Name of Album comes here"
-        />
+        android:layout_marginStart="14dp"
+        android:text="Name of Album"
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
     <GridView
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/deletePhotoBtn"
+        android:layout_marginTop="12dp"
         android:columnWidth="90dp"
-        android:numColumns="auto_fit"
-        android:verticalSpacing="10dp"
-        android:horizontalSpacing="10dp"
-        android:stretchMode="columnWidth"
         android:gravity="center"
-        android:layout_below="@+id/deletePhotoBtn">
+        android:horizontalSpacing="10dp"
+        android:numColumns="auto_fit"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="10dp">
 
     </GridView>
 
