@@ -99,6 +99,14 @@ public class UserHomepage extends AppCompatActivity {
                                 String albumName = albumNamefromDialog.getText().toString();
                                 //create an album and add it to the list of albums
                                 albumName = albumNamefromDialog.getText().toString();
+
+                                for(int i = 0; i < manager.getAlbums().size(); i++){
+                                    if(manager.getAlbums().get(i).getAlbumName().equals(albumName)){
+                                        Toast.makeText(getApplicationContext(), "Duplicate Album Names Not Allowed! Try Another Name", Toast.LENGTH_LONG).show();
+                                        return; //duplicate album name not allowed
+                                    }
+                                }
+
                                 Album newAlbum = new Album(albumName);
                                 manager.addAlbum(newAlbum);
 

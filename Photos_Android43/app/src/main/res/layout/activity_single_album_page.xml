@@ -10,15 +10,27 @@
     tools:context="com.photos_android.photos_android43.SingleAlbumPage">
 
     <Button
+        android:id="@+id/movePhotoBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="12dp"
+        android:layout_toStartOf="@+id/deletePhotoBtn"
+        android:backgroundTint="@color/colorAccent"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="Move" />
+
+    <Button
         android:id="@+id/deletePhotoBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:backgroundTint="@color/colorAccent"
         android:clickable="true"
         android:focusable="true"
-        android:text="Delete Photo" />
+        android:text="Delete" />
 
     <TextView
         android:id="@+id/albumName"
