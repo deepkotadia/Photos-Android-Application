@@ -17,8 +17,7 @@
         <model.MySpinner
             android:id="@+id/searchOptions"
             android:layout_width="130dp"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content"/>
 
         <EditText
             android:id="@+id/tagValue"
