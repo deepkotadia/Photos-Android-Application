@@ -19,23 +19,23 @@
 
     <Button
         android:id="@+id/backwardBtn"
-        android:layout_width="30dp"
+        android:layout_width="25dp"
         android:layout_height="50dp"
         android:layout_marginTop="141dp"
         android:background="@null"
-        android:text="<"
+        android:text="@string/backbtntxt"
         android:textSize="20dp"
         android:textStyle="bold"
         />
 
     <Button
         android:id="@+id/forwardBtn"
-        android:layout_width="30dp"
+        android:layout_width="25dp"
         android:layout_height="50dp"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="141dp"
         android:background="@null"
-        android:text=">"
+        android:text="@string/fwdbtntxt"
         android:textSize="20dp"
         android:textStyle="bold" />
 
@@ -68,6 +68,7 @@
     </RelativeLayout>
 
     <ListView
+        android:id="@+id/tagsOfPhotoSlideshow"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"

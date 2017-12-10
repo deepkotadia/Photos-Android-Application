@@ -46,6 +46,19 @@ public class Photo implements Serializable {
         this.locationTags.remove(locationTag.toLowerCase());
     }
 
+    public List<String> getAllTags(){
+        List<String> allTags = new ArrayList<String>();
+
+        for(String locationTag : this.getlocationTags()){
+            allTags.add("Location: " + locationTag);
+        }
+        for(String personTag : this.getpersonTags()){
+            allTags.add("Person: " + personTag);
+        }
+
+        return allTags;
+    }
+
     @Override
     public boolean equals(Object obj){
         if(obj == this){

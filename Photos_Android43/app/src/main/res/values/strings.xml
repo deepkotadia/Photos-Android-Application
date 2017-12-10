@@ -18,16 +18,17 @@
         <item>Person</item>
     </string-array>
 
-    <string name="title"> Tag </string>
-    <string name="fwdbtntxt"> Next </string>
-    <string name="backbtntxt"> Prev </string>
-    <string name="desc"> slideshow display </string>
-    <string name="searchBtnTxt"> Search </string>
-    <string name="albumOptionsPrompt"> Select One: </string>
-    <string name="searchTitleText"> Search by Tags </string>
-    <string name="tagValueName"> Enter value of tag </string>
-    <string name="addButtonName"> + </string>
+    <string name="title">Tag</string>
+    <string name="fwdbtntxt">&gt;</string>
+    <string name="backbtntxt">&lt;</string>
+    <string name="desc">Slideshow display</string>
+    <string name="searchBtnTxt">Search</string>
+    <string name="albumOptionsPrompt">Select One:</string>
+    <string name="searchTitleText">Search by Tags</string>
+    <string name="tagValueName">Enter value of tag</string>
+    <string name="addButtonName">+</string>
     <string name="tagsEnteredListHeader"><u>Tags you have entered: </u></string>
-    <string name="searchButtonName"> Search </string>
+    <string name="searchButtonName">Search</string>
+    <string name="deleteTagButtonText">X</string>
 
 </resources>

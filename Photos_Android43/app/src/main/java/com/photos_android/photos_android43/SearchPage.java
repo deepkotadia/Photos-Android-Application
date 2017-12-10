@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,9 +60,14 @@ public class SearchPage extends AppCompatActivity {
         addTagButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String tagVal = tagEntered.getText().toString();
+                if(tagVal.isEmpty()){
+                    Toast.makeText(SearchPage.this, "Tag cannot be empty", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 String currText = tagsSelected.getText().toString();
                 String tagKey = spinnerItems[spinnerIndexSelected];
-                String tagVal = tagEntered.getText().toString();
 
                 tagsSelected.setText(currText + "\n" + tagKey + ": " + tagVal);
 

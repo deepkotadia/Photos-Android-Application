@@ -22,9 +22,11 @@
         <activity
             android:name=".Slideshow"
             android:parentActivityName=".SingleAlbumPage" />
-        <activity android:name=".photosInAlbum_list"></activity>
-        <activity android:name=".SearchPage"
+        <activity android:name=".photosInAlbum_list" />
+        <activity
+            android:name=".SearchPage"
             android:parentActivityName=".UserHomepage" />
+        <activity android:name=".PhotoTagsListView"></activity>
     </application>
 
 </manifest>
