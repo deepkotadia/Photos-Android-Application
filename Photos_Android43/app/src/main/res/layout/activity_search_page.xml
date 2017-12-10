@@ -24,10 +24,11 @@
             android:layout_width="190dp"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/searchOptions"
-            android:text="@string/tagValueName"/>
+            android:hint="@string/tagValueName"
+            android:inputType="text"/>
 
         <Button
-            android:id="@+id/addButton"
+            android:id="@+id/addTagButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/tagValue"

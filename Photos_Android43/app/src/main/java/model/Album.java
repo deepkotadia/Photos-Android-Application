@@ -27,19 +27,6 @@ public class Album implements Serializable {
         photos = new ArrayList<Photo>();
     }
 
-
-    public String getAlbumName() {
-        return albumName;
-    }
-
-    public void setAlbumName(String albumName) {
-        this.albumName = albumName;
-    }
-
-    public List<Photo> getPhotos() {
-        return photos;
-    }
-
     /**
      * to add a photo to an album
      * @param photoPath  file path of the photo
@@ -57,6 +44,18 @@ public class Album implements Serializable {
         photos.remove(photoIndex);
     }
 
+    public String getAlbumName() {
+        return albumName;
+    }
+
+    public void setAlbumName(String albumName) {
+        this.albumName = albumName;
+    }
+
+    public List<Photo> getPhotos() {
+        return photos;
+    }
+
     public Photo getcurrentPhoto() {
         return currentPhoto;
     }
@@ -64,6 +63,4 @@ public class Album implements Serializable {
     public void setcurrentPhoto(Photo currentPhoto) {
         this.currentPhoto = currentPhoto;
     }
-
-
 }

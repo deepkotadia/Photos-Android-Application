@@ -30,6 +30,40 @@ public class Photo implements Serializable {
         locationTags = new ArrayList<String>();
     }
 
+    public void addPersonTag(String personTag){
+        this.personTags.add(personTag.toLowerCase());
+    }
+
+    public void removePersonTag(String personTag){
+        this.personTags.remove(personTag.toLowerCase());
+    }
+
+    public void addLocationTag(String locationTag){
+        this.locationTags.add(locationTag.toLowerCase());
+    }
+
+    public void removeLocationTag(String locationTag){
+        this.locationTags.remove(locationTag.toLowerCase());
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        if(obj == this){
+            return true;
+        }
+
+        if(!(obj instanceof Photo)){
+            return false;
+        }
+
+        Photo photo = (Photo) obj;
+        return photo.getphotoPath().equals(this.getphotoPath());
+    }
+
+    @Override
+    public int hashCode(){
+        return 17 * 11 + this.getphotoPath().hashCode();
+    }
 
     public String getphotoPath() {
         return photoPath;
@@ -46,5 +80,4 @@ public class Photo implements Serializable {
     public List<String> getlocationTags() {
         return locationTags;
     }
-
 }

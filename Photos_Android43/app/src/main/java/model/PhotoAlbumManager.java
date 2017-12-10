@@ -16,8 +16,8 @@ public class PhotoAlbumManager implements Serializable {
     /* Serialization stuff */
     public static final long serialVersionUID = 42L;
 
-    public List<Album> albums;
-    public Album currentAlbum;
+    private List<Album> albums;
+    private Album currentAlbum;
 
     /**
      * PhotoAlbumManager
@@ -45,6 +45,61 @@ public class PhotoAlbumManager implements Serializable {
         albums.remove(index);
     }
 
+    public List<Photo> getPhotosWithTags(List<String> locationTags, List<String> personTags){
+        Set<Photo> resultSet = new HashSet<Photo>();
+        List<Photo> resultList = new ArrayList<Photo>();
+
+        for(Album album : this.albums){
+            for(Photo photo : album.getPhotos()){
+                boolean alreadyAdded = false;
+
+                for(String locationTag : locationTags) {
+                    if (photo.getlocationTags().contains(locationTag.toLowerCase())) {
+                        resultSet.add(photo);
+                        alreadyAdded = true;
+                        break;
+                    }
+                }
+                if(!alreadyAdded) {
+                    for (String personTag : personTags) {
+                        if (photo.getpersonTags().contains(personTag.toLowerCase())) {
+                            resultSet.add(photo);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        resultList.addAll(resultSet);
+        return resultList;
+    }
+
+    /**
+     * serialize
+     * Serialize the userdata and write it in albums.dat file
+     *
+     * @param userdata - all all albums, photos, and tags info to be serialized
+     */
+    public static void serialize(PhotoAlbumManager userdata) throws IOException {
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("/data/data/com.photos_android.photos_android43/files/albums.dat"));
+        oos.writeObject(userdata);
+        oos.close();
+    }
+
+    /**
+     * deserialize
+     * Read the userdata from albums.dat file and deserialize it
+     *
+     * @return userdata - albums of user
+     */
+    public static PhotoAlbumManager deserialize() throws IOException, ClassNotFoundException {
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream("/data/data/com.photos_android.photos_android43/files/albums.dat"));
+        PhotoAlbumManager userdata = (PhotoAlbumManager) ois.readObject();
+        ois.close();
+        return userdata;
+    }
+
     /**
      * getter for the list of albums in app
      * @return List<Album>
@@ -68,32 +123,4 @@ public class PhotoAlbumManager implements Serializable {
     public void setcurrentAlbum(Album currentAlbum) {
         this.currentAlbum = currentAlbum;
     }
-
-
-    /**
-     * serialize
-     * Serialize the userdata and write it in albums.dat file
-     *
-     * @param userdata - all all albums, photos, and tags info to be serialized
-     */
-    public static void serialize(PhotoAlbumManager userdata) throws IOException {
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("/data/data/com.photos_android.photos_android43/files/albums.dat"));
-        oos.writeObject(userdata);
-        oos.close();
-    }
-
-
-    /**
-     * deserialize
-     * Read the userdata from albums.dat file and deserialize it
-     *
-     * @return userdata - albums of user
-     */
-    public static PhotoAlbumManager deserialize() throws IOException, ClassNotFoundException {
-        ObjectInputStream ois = new ObjectInputStream(new FileInputStream("/data/data/com.photos_android.photos_android43/files/albums.dat"));
-        PhotoAlbumManager userdata = (PhotoAlbumManager) ois.readObject();
-        ois.close();
-        return userdata;
-    }
-
 }
