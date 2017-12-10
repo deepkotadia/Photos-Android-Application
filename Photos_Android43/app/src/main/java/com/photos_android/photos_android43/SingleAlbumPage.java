@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +32,7 @@ public class SingleAlbumPage extends AppCompatActivity {
     private FloatingActionButton addPhotoBtn;
     private static final int READ_REQUEST_CODE = 42;
     private ImageAdapter1 imageAdapter;
+    private Button deletePhotoBtn;
     GridView gridview;
 
     @Override
@@ -89,6 +91,47 @@ public class SingleAlbumPage extends AppCompatActivity {
                 startActivityForResult(intent, READ_REQUEST_CODE);
             }
 
+        });
+
+        deletePhotoBtn = (Button) findViewById(R.id.deletePhotoBtn);
+        deletePhotoBtn.setVisibility(View.INVISIBLE);
+        gridview.setLongClickable(true);
+
+        gridview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                deletePhotoBtn.setVisibility(View.VISIBLE);
+                final int photoindex = i;
+
+                deletePhotoBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        //remove photo at photoindex
+                        UserHomepage.manager.getcurrentAlbum().removePhoto(photoindex);
+
+                        Toast.makeText(SingleAlbumPage.this, "Photo Successfully Deleted", Toast.LENGTH_SHORT).show();
+
+                        //serialize and refresh list
+                        try {
+                            PhotoAlbumManager.serialize(UserHomepage.manager);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        gridview = (GridView) findViewById(R.id.gridView1);
+                        populatePhotosList();
+                        imageAdapter.notifyDataSetChanged();
+                        gridview.setAdapter(imageAdapter);
+                        //refreshing ends here
+
+                        deletePhotoBtn.setVisibility(View.INVISIBLE); //hide the delete button
+
+                    }
+                });
+
+                return true;
+            }
         });
 
     }

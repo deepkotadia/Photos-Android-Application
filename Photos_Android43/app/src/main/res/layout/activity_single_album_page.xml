@@ -18,8 +18,7 @@
         android:backgroundTint="@color/colorAccent"
         android:clickable="true"
         android:focusable="true"
-        android:text="Delete Photo"
-        android:visibility="invisible" />
+        android:text="Delete Photo" />
 
     <TextView
         android:id="@+id/albumName"
