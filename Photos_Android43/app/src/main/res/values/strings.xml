@@ -30,5 +30,7 @@
     <string name="tagsEnteredListHeader"><u>Tags you have entered: </u></string>
     <string name="searchButtonName">Search</string>
     <string name="deleteTagButtonText">X</string>
+    <string name="deleteButtonText">Delete</string>
+    <string name="moveButtonText">Move</string>
 
 </resources>

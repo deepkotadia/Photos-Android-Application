@@ -9,56 +9,51 @@
     android:orientation="vertical"
     tools:context="com.photos_android.photos_android43.SingleAlbumPage">
 
+    <TextView
+        android:id="@+id/albumName"
+        android:layout_width="182dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_gravity="left"
+        android:text="Name Of Album"
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="21sp"
+        android:textStyle="bold" />
+
     <Button
         android:id="@+id/movePhotoBtn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="12dp"
-        android:layout_toStartOf="@+id/deletePhotoBtn"
+        android:layout_toLeftOf="@+id/deletePhotoBtn"
         android:backgroundTint="@color/colorAccent"
         android:clickable="true"
         android:focusable="true"
-        android:text="Move" />
+        android:text="@string/moveButtonText" />
 
     <Button
         android:id="@+id/deletePhotoBtn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:backgroundTint="@color/colorAccent"
         android:clickable="true"
         android:focusable="true"
-        android:text="Delete" />
-
-    <TextView
-        android:id="@+id/albumName"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/gridView1"
-        android:layout_alignParentStart="true"
-        android:layout_gravity="left"
-        android:layout_marginStart="14dp"
-        android:text="Name of Album"
-        android:textColor="@android:color/holo_red_light"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:text="@string/deleteButtonText" />
 
     <GridView
         android:id="@+id/gridView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/deletePhotoBtn"
-        android:layout_marginTop="12dp"
         android:columnWidth="90dp"
         android:gravity="center"
         android:horizontalSpacing="10dp"
         android:numColumns="auto_fit"
         android:stretchMode="columnWidth"
         android:verticalSpacing="10dp">
-
     </GridView>
 
     <android.support.design.widget.FloatingActionButton
@@ -72,6 +67,5 @@
         android:focusable="true"
         app:backgroundTint="@color/colorPrimary"
         app:srcCompat="@android:drawable/ic_input_add" />
-
 
 </RelativeLayout>
