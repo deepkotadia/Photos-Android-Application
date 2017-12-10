@@ -20,9 +20,8 @@
     <Button
         android:id="@+id/backwardBtn"
         android:layout_width="30dp"
-        android:layout_height="50dp"
+        android:layout_height="70dp"
         android:layout_marginTop="141dp"
-        android:background="@null"
         android:text="Prev"
         android:textSize="10dp"
         android:textStyle="normal" />
@@ -30,10 +29,9 @@
     <Button
         android:id="@+id/forwardBtn"
         android:layout_width="30dp"
-        android:layout_height="50dp"
+        android:layout_height="70dp"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="141dp"
-        android:background="@null"
         android:text="next"
         android:textSize="10dp"
         android:textStyle="normal" />
