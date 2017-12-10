@@ -24,7 +24,7 @@
         android:layout_marginTop="141dp"
         android:background="@null"
         android:text="@string/backbtntxt"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         />
 
@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/addTagValue"
             android:text="@string/addButtonName"
-            android:textSize="14dp"/>
+            android:textSize="14sp"/>
     </RelativeLayout>
 
     <ListView

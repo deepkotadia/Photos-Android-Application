@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/tagValue"
             android:text="@string/addButtonName"
-            android:textSize="14dp"/>
+            android:textSize="14sp"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -48,7 +48,7 @@
             android:layout_width="275dp"
             android:layout_height="wrap_content"
             android:text="@string/tagsEnteredListHeader"
-            android:textSize="16dp"/>
+            android:textSize="16sp"/>
 
         <Button
             android:id="@+id/searchButton"
