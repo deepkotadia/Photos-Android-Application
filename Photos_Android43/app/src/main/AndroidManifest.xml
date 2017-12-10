@@ -19,9 +19,10 @@
         <activity
             android:name=".SingleAlbumPage"
             android:parentActivityName=".UserHomepage" />
-
-        <activity android:name=".Slideshow"
+        <activity
+            android:name=".Slideshow"
             android:parentActivityName=".SingleAlbumPage" />
+        <activity android:name=".photosInAlbum_list"></activity>
     </application>
 
 </manifest>

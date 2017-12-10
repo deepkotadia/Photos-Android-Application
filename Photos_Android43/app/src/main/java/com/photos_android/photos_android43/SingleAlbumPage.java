@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.ImageAdapter;
+import model.ImageAdapter1;
 import model.Photo;
 import model.PhotoAlbumManager;
 
@@ -28,6 +30,8 @@ public class SingleAlbumPage extends AppCompatActivity {
     private static List<Photo> photosInAlbum = new ArrayList<Photo>();
     private FloatingActionButton addPhotoBtn;
     private static final int READ_REQUEST_CODE = 42;
+    private ImageAdapter1 imageAdapter;
+    GridView gridview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +44,9 @@ public class SingleAlbumPage extends AppCompatActivity {
 
         populatePhotosList();
 
-        GridView gridview = (GridView) findViewById(R.id.gridview);
-        gridview.setAdapter(new ImageAdapter(this));
+        gridview = (GridView) findViewById(R.id.gridView1);
+        imageAdapter = new ImageAdapter1(this, photosInAlbum);
+        gridview.setAdapter(imageAdapter);
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
@@ -104,9 +109,9 @@ public class SingleAlbumPage extends AppCompatActivity {
             Uri uri = null;
             if (resultData != null) {
                 uri = resultData.getData();
-                String image_uri = uri.toString();
+                String image_uristr = uri.toString();
                 //At this point, we have the photopath, so add it in the current album
-                UserHomepage.manager.getcurrentAlbum().addPhoto(image_uri);
+                UserHomepage.manager.getcurrentAlbum().addPhoto(image_uristr);
 
                 //serialize and refresh list
                 try {
@@ -114,7 +119,10 @@ public class SingleAlbumPage extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                gridview = (GridView) findViewById(R.id.gridView1);
                 populatePhotosList();
+                imageAdapter.notifyDataSetChanged();
+                gridview.setAdapter(imageAdapter);
                 //refreshing ends here
             }
         }

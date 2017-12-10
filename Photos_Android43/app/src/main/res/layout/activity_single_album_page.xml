@@ -25,7 +25,7 @@
         android:id="@+id/albumName"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/gridview"
+        android:layout_above="@+id/gridView1"
         android:layout_alignParentStart="true"
         android:layout_gravity="left"
         android:layout_marginStart="14dp"
@@ -35,7 +35,7 @@
         android:textStyle="bold" />
 
     <GridView
-        android:id="@+id/gridview"
+        android:id="@+id/gridView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
