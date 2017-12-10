@@ -32,7 +32,7 @@ public class SingleAlbumPage extends AppCompatActivity {
     private FloatingActionButton addPhotoBtn;
     private static final int READ_REQUEST_CODE = 42;
     private ImageAdapter1 imageAdapter;
-    private Button deletePhotoBtn;
+    private Button deletePhotoBtn, movePhotoBtn;
     GridView gridview;
 
     @Override
@@ -94,14 +94,20 @@ public class SingleAlbumPage extends AppCompatActivity {
         });
 
         deletePhotoBtn = (Button) findViewById(R.id.deletePhotoBtn);
+        movePhotoBtn = (Button) findViewById(R.id.movePhotoBtn);
         deletePhotoBtn.setVisibility(View.INVISIBLE);
+        movePhotoBtn.setVisibility(View.INVISIBLE);
         gridview.setLongClickable(true);
 
+        /*
+         * Long Click on Photo to Delete; Move Photo to different Album
+         */
         gridview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                 deletePhotoBtn.setVisibility(View.VISIBLE);
+                movePhotoBtn.setVisibility(View.VISIBLE);
                 final int photoindex = i;
 
                 deletePhotoBtn.setOnClickListener(new View.OnClickListener() {
@@ -126,6 +132,40 @@ public class SingleAlbumPage extends AppCompatActivity {
                         //refreshing ends here
 
                         deletePhotoBtn.setVisibility(View.INVISIBLE); //hide the delete button
+                        movePhotoBtn.setVisibility(View.INVISIBLE); //hide the move button
+
+                    }
+                });
+
+                movePhotoBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        //remove photo at photoindex from current album
+
+                        //TODO
+                        /*
+                        UserHomepage.manager.getcurrentAlbum().removePhoto(photoindex);
+
+
+
+                        Toast.makeText(SingleAlbumPage.this, "Photo Successfully Deleted", Toast.LENGTH_SHORT).show();
+
+                        //serialize and refresh list
+                        try {
+                            PhotoAlbumManager.serialize(UserHomepage.manager);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        gridview = (GridView) findViewById(R.id.gridView1);
+                        populatePhotosList();
+                        imageAdapter.notifyDataSetChanged();
+                        gridview.setAdapter(imageAdapter);
+                        //refreshing ends here
+                        */
+
+                        deletePhotoBtn.setVisibility(View.INVISIBLE); //hide the delete button
+                        movePhotoBtn.setVisibility(View.INVISIBLE); //hide the move button
 
                     }
                 });
@@ -133,6 +173,10 @@ public class SingleAlbumPage extends AppCompatActivity {
                 return true;
             }
         });
+
+        /*
+         * Single Click on Photo to Open Display/Slideshow
+         */
 
     }
 
@@ -153,6 +197,14 @@ public class SingleAlbumPage extends AppCompatActivity {
             if (resultData != null) {
                 uri = resultData.getData();
                 String image_uristr = uri.toString();
+
+                for(int i = 0; i < photosInAlbum.size(); i++){
+                    if(image_uristr.equals(photosInAlbum.get(i).getphotoPath())){ //duplicate photos in same album not allowed
+                        Toast.makeText(getApplicationContext(), "This Photo Already Exists In Album", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                }
+
                 //At this point, we have the photopath, so add it in the current album
                 UserHomepage.manager.getcurrentAlbum().addPhoto(image_uristr);
 
