@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.view.LayoutInflater;
 import android.support.v7.app.AlertDialog;
@@ -34,6 +35,7 @@ public class UserHomepage extends AppCompatActivity {
 
     private FloatingActionButton addAlbumBtn;
     private MySpinner spinner;
+    private Button searchButton;
     final Context c = this;
     //final EditText albumNameFromDialogBox = new EditText(this);
     String albumName;
@@ -131,6 +133,7 @@ public class UserHomepage extends AppCompatActivity {
         spinner = (MySpinner) findViewById(R.id.spinner3);
         ArrayAdapter<CharSequence> itemAdapter = ArrayAdapter.createFromResource(this, R.array.album_options,android.R.layout.simple_spinner_item);
         itemAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setPrompt("Select One:");
         spinner.setAdapter(itemAdapter);
         spinner.setVisibility(View.INVISIBLE); //initially, the spinner does not appear
         testList.setLongClickable(true);
@@ -242,6 +245,15 @@ public class UserHomepage extends AppCompatActivity {
                 Intent singlealbum = new Intent(UserHomepage.this, SingleAlbumPage.class);
                 startActivity(singlealbum);
 
+            }
+        });
+
+        searchButton = (Button) findViewById(R.id.searchButton);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent searchPage = new Intent(UserHomepage.this, SearchPage.class);
+                startActivity(searchPage);
             }
         });
 
