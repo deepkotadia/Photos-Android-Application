@@ -24,11 +24,6 @@ public class ImageAdapter1 extends BaseAdapter {
         private Context context;
         private List<Photo> photosInAlbum;
 
-        @Override
-        public int getCount() {
-            return photosInAlbum.size();
-        }
-
         public ImageAdapter1(Context context, List<Photo> photosInAlbum) {
             this.context = context;
             this.photosInAlbum = photosInAlbum;
@@ -48,11 +43,6 @@ public class ImageAdapter1 extends BaseAdapter {
                 // get layout from mobile.xml
                 gridView = inflater.inflate(R.layout.activity_photos_in_album_list, null);
 
-                // set value into textview
-                TextView textView = (TextView) gridView
-                        .findViewById(R.id.grid_item_label);
-                textView.setText((CharSequence) photosInAlbum.get(position).getfileName());
-
                 // set image into imageview
                 ImageView imageView = (ImageView) gridView
                         .findViewById(R.id.grid_item_image);
@@ -67,6 +57,11 @@ public class ImageAdapter1 extends BaseAdapter {
             }
 
             return gridView;
+        }
+
+        @Override
+        public int getCount() {
+            return photosInAlbum.size();
         }
 
         @Override

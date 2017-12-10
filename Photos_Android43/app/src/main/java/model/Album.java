@@ -14,7 +14,7 @@ public class Album implements Serializable {
 
     private String albumName;
     private List<Photo> photos;
-    private Photo currentPhoto;
+    private Photo currentPhoto = null;
 
 
     /**
@@ -60,7 +60,7 @@ public class Album implements Serializable {
         return currentPhoto;
     }
 
-    public void setcurrentPhoto(Photo currentPhoto) {
+    public void setCurrentPhoto(Photo currentPhoto) {
         this.currentPhoto = currentPhoto;
     }
 }

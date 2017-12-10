@@ -86,6 +86,7 @@ public class SearchPage extends AppCompatActivity {
                 List<Photo> searchResults = UserHomepage.manager.getPhotosWithTags(locationTags, personTags);
 
                 // TODO Populate grid view with search result
+                
             }
         });
     }

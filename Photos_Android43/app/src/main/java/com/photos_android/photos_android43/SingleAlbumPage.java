@@ -35,6 +35,8 @@ public class SingleAlbumPage extends AppCompatActivity {
     private Button deletePhotoBtn, movePhotoBtn;
     GridView gridview;
 
+    private static final String TAG = "SingleAlbumPage";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -49,15 +51,6 @@ public class SingleAlbumPage extends AppCompatActivity {
         gridview = (GridView) findViewById(R.id.gridView1);
         imageAdapter = new ImageAdapter1(this, photosInAlbum);
         gridview.setAdapter(imageAdapter);
-
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-                Toast.makeText(SingleAlbumPage.this, "" + position,
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
 
         addPhotoBtn = (FloatingActionButton) findViewById(R.id.addPhotoBtn);
         addPhotoBtn.setOnClickListener(new View.OnClickListener() {
@@ -116,6 +109,7 @@ public class SingleAlbumPage extends AppCompatActivity {
 
                         //remove photo at photoindex
                         UserHomepage.manager.getcurrentAlbum().removePhoto(photoindex);
+                        Log.d(TAG, "onClick: Entered delete listener and removed photo from model");
 
                         Toast.makeText(SingleAlbumPage.this, "Photo Successfully Deleted", Toast.LENGTH_SHORT).show();
 
@@ -178,6 +172,18 @@ public class SingleAlbumPage extends AppCompatActivity {
          * Single Click on Photo to Open Display/Slideshow
          */
 
+        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v,
+                                    int position, long id) {
+//                Toast.makeText(SingleAlbumPage.this, "" + position,
+//                        Toast.LENGTH_SHORT).show();
+                Intent slideShowPageIntent = new Intent(SingleAlbumPage.this, Slideshow.class);
+                slideShowPageIntent.putExtra("imagePosition", position);
+                startActivity(slideShowPageIntent);
+            }
+        });
     }
 
 
@@ -229,10 +235,7 @@ public class SingleAlbumPage extends AppCompatActivity {
      */
     private static void populatePhotosList() {
         photosInAlbum.clear();
-
-        for(int i = 0; i < UserHomepage.manager.getcurrentAlbum().getPhotos().size(); i++) {
-            photosInAlbum.add(UserHomepage.manager.getcurrentAlbum().getPhotos().get(i));
-        }
+        photosInAlbum.addAll(UserHomepage.manager.getcurrentAlbum().getPhotos());
     }
 
 }
