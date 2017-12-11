@@ -110,7 +110,7 @@ public class Slideshow extends AppCompatActivity {
                 tagEntered.setText("");
 
                 // TODO Serialize
-                //refresh and serialize list 
+                //refresh and serialize list
                 try {
                     PhotoAlbumManager.serialize(UserHomepage.manager);
                 } catch (IOException e) {

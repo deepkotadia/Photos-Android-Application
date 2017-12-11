@@ -53,17 +53,27 @@ public class PhotoAlbumManager implements Serializable {
             for(Photo photo : album.getPhotos()){
                 boolean alreadyAdded = false;
 
-                for(String locationTag : locationTags) {
-                    if (photo.getlocationTags().contains(locationTag.toLowerCase())) {
-                        resultSet.add(photo);
-                        alreadyAdded = true;
+                for(String searchLocationTag : locationTags) {
+                    for(String photoLocationTag : photo.getlocationTags()) {
+                        if (photoLocationTag.toLowerCase().contains(searchLocationTag.toLowerCase())){
+                            resultSet.add(photo);
+                            alreadyAdded = true;
+                            break;
+                        }
+                    }
+                    if(alreadyAdded){
                         break;
                     }
                 }
                 if(!alreadyAdded) {
-                    for (String personTag : personTags) {
-                        if (photo.getpersonTags().contains(personTag.toLowerCase())) {
-                            resultSet.add(photo);
+                    for (String searchPersonTag : personTags) {
+                        for(String photoPersonTag : photo.getpersonTags()) {
+                            if (photoPersonTag.toLowerCase().contains(searchPersonTag.toLowerCase())) {
+                                resultSet.add(photo);
+                                break;
+                            }
+                        }
+                        if(alreadyAdded){
                             break;
                         }
                     }
