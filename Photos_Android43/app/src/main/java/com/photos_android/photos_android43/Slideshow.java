@@ -124,7 +124,6 @@ public class Slideshow extends AppCompatActivity {
             }
         });
 
-        tagText = (TextView) findViewById(R.id.tagOfPhotoSlideshow);
 
         deleteTagButton = (Button) findViewById(R.id.deleteTagButtonSlideshow);
 
@@ -132,33 +131,41 @@ public class Slideshow extends AppCompatActivity {
                                             @Override
                                             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                                                 deleteTagButton.setVisibility(View.VISIBLE);
+                                                final String selectedTag = tagsList.getItemAtPosition(i).toString();
+//                                                tagText = (TextView) findViewById(R.id.tagOfPhotoSlideshow);
+                                                deleteTagButton.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View view) {
+                                                        String[] splitList = selectedTag.split(": ");
+                                                        String tagKey = splitList[0];
+                                                        String tagVal = splitList[1];
+                                                        Photo currPhoto = UserHomepage.manager.getcurrentAlbum().getcurrentPhoto();
+
+                                                        if(tagKey.toLowerCase().equals(spinnerItems[0].toLowerCase())){
+                                                            currPhoto.removeLocationTag(tagVal);
+                                                        }
+                                                        else if(tagKey.toLowerCase().equals(spinnerItems[1].toLowerCase())){
+                                                            currPhoto.removePersonTag(tagVal);
+                                                        }
+
+                                                        // TODO Serialize
+                                                        try {
+                                                            PhotoAlbumManager.serialize(UserHomepage.manager);
+                                                        } catch (IOException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                        tagsList = (ListView) findViewById(R.id.tagsOfPhotoSlideshow);
+                                                        allTags.clear();
+                                                        allTags.addAll(UserHomepage.manager.getcurrentAlbum().getcurrentPhoto().getAllTags());
+                                                        tagsAdapter.notifyDataSetChanged();
+                                                        tagsList.setAdapter(tagsAdapter);
+                                                    }
+                                                });
+
 
                                             }
                                         });
 
-//        deleteTagButton = (Button) findViewById(R.id.deleteTagButton);
-//
-//        deleteTagButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String[] splitList = tagText.getText().toString().split(": ");
-//                String tagKey = splitList[0];
-//                String tagVal = splitList[1];
-//                Photo currPhoto = UserHomepage.manager.getcurrentAlbum().getcurrentPhoto();
-//
-//                if(tagKey.toLowerCase().equals(spinnerItems[0].toLowerCase())){
-//                    currPhoto.removeLocationTag(tagVal);
-//                }
-//                else if(tagKey.toLowerCase().equals(spinnerItems[1].toLowerCase())){
-//                    currPhoto.removePersonTag(tagVal);
-//                }
-//
-//                // TODO Check if need to serialize
-//                tagsList = (ListView) findViewById(R.id.tagsOfPhotoSlideshow);
-//                allTags = UserHomepage.manager.getcurrentAlbum().getcurrentPhoto().getAllTags();
-//                tagsAdapter.notifyDataSetChanged();
-//                tagsList.setAdapter(tagsAdapter);
-//            }
-//        });
+
     }
 }
