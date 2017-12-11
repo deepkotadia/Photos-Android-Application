@@ -49,6 +49,7 @@ public class Slideshow extends AppCompatActivity {
 
         imageOnSlideShow = (ImageView) findViewById(R.id.imageView);
         if(this.imagePosition >= 0){
+            // Put image into ImageView
             Album currAlbum = UserHomepage.manager.getcurrentAlbum();
             Photo currPhoto = currAlbum.getPhotos().get(imagePosition);
             Uri imgUri = Uri.parse(currPhoto.getphotoPath());

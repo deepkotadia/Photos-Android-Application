@@ -7,12 +7,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import model.ImageAdapterForSearch;
 import model.Photo;
 import model.MySpinner;
 
@@ -26,6 +28,11 @@ public class SearchPage extends AppCompatActivity {
     private Button addTagButton, searchButton;
     private EditText tagEntered;
     private TextView tagsSelected;
+
+    private ImageAdapterForSearch imageAdapter;
+    GridView gridViewForSearchResult;
+
+    private List<Photo> searchResults = new ArrayList<Photo>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,13 +87,20 @@ public class SearchPage extends AppCompatActivity {
             }
         });
 
+        gridViewForSearchResult = (GridView) findViewById(R.id.searchedPhotosGridView);
+        imageAdapter = new ImageAdapterForSearch(this, searchResults);
+        gridViewForSearchResult.setAdapter(imageAdapter);
+
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                List<Photo> searchResults = UserHomepage.manager.getPhotosWithTags(locationTags, personTags);
+                searchResults.clear();
+                searchResults.addAll(UserHomepage.manager.getPhotosWithTags(locationTags, personTags));
 
                 // TODO Populate grid view with search result
-                
+                gridViewForSearchResult = (GridView) findViewById(R.id.searchedPhotosGridView);
+                imageAdapter.notifyDataSetChanged();
+                gridViewForSearchResult.setAdapter(imageAdapter);
             }
         });
     }

@@ -26,7 +26,8 @@
         <activity
             android:name=".SearchPage"
             android:parentActivityName=".UserHomepage" />
-        <activity android:name=".PhotoTagsListView"></activity>
+        <activity android:name=".PhotoTagsListView" />
+        <activity android:name=".photosInSearchedListView"></activity>
     </application>
 
 </manifest>
