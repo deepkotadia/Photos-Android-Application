@@ -125,6 +125,17 @@ public class Slideshow extends AppCompatActivity {
         });
 
         tagText = (TextView) findViewById(R.id.tagOfPhotoSlideshow);
+
+        deleteTagButton = (Button) findViewById(R.id.deleteTagButtonSlideshow);
+
+        tagsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                            @Override
+                                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                                deleteTagButton.setVisibility(View.VISIBLE);
+
+                                            }
+                                        });
+
 //        deleteTagButton = (Button) findViewById(R.id.deleteTagButton);
 //
 //        deleteTagButton.setOnClickListener(new View.OnClickListener() {
