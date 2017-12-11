@@ -14,12 +14,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import model.Album;
 import model.MySpinner;
 import model.Photo;
+import model.PhotoAlbumManager;
 
 public class Slideshow extends AppCompatActivity {
     private MySpinner spinner;
@@ -108,6 +110,12 @@ public class Slideshow extends AppCompatActivity {
                 tagEntered.setText("");
 
                 // TODO Serialize
+                //refresh and serialize list 
+                try {
+                    PhotoAlbumManager.serialize(UserHomepage.manager);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 tagsList = (ListView) findViewById(R.id.tagsOfPhotoSlideshow);
                 allTags.clear();
                 allTags.addAll(UserHomepage.manager.getcurrentAlbum().getcurrentPhoto().getAllTags());
