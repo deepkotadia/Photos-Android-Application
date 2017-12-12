@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Album;
 import model.ImageAdapter;
 import model.ImageAdapter1;
 import model.Photo;
@@ -172,6 +173,19 @@ public class SingleAlbumPage extends AppCompatActivity {
                                             }
                                         }
                                         UserHomepage.manager.getAlbums().get(destinationalbumindex).addPhoto(photopath);
+
+                                        //copy all the location and person tags
+                                        Photo srcphoto = UserHomepage.manager.getcurrentAlbum().getPhotos().get(photoindex);
+                                        Album destphotoalbum = UserHomepage.manager.getAlbums().get(destinationalbumindex);
+                                        int destphotoindex = destphotoalbum.getPhotos().size() - 1;
+                                        Photo destphoto = destphotoalbum.getPhotos().get(destphotoindex);
+
+                                        for(int i = 0; i < srcphoto.getlocationTags().size(); i++){
+                                            destphoto.addLocationTag(srcphoto.getlocationTags().get(i));
+                                        }
+                                        for(int i = 0; i < srcphoto.getpersonTags().size(); i++){
+                                            destphoto.addPersonTag(srcphoto.getpersonTags().get(i));
+                                        }
 
                                         //Now, delete photo from current album
                                         UserHomepage.manager.getcurrentAlbum().removePhoto(photoindex);
