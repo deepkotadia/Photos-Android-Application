@@ -1,19 +1,25 @@
 package com.photos_android.photos_android43;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +39,7 @@ public class SingleAlbumPage extends AppCompatActivity {
     private static final int READ_REQUEST_CODE = 42;
     private ImageAdapter1 imageAdapter;
     private Button deletePhotoBtn, movePhotoBtn;
+    final Context c = this;
     GridView gridview;
 
     private static final String TAG = "SingleAlbumPage";
@@ -102,6 +109,7 @@ public class SingleAlbumPage extends AppCompatActivity {
                 deletePhotoBtn.setVisibility(View.VISIBLE);
                 movePhotoBtn.setVisibility(View.VISIBLE);
                 final int photoindex = i;
+                final Photo photo_at_pos = UserHomepage.manager.getcurrentAlbum().getPhotos().get(photoindex);
 
                 deletePhotoBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -109,7 +117,6 @@ public class SingleAlbumPage extends AppCompatActivity {
 
                         //remove photo at photoindex
                         UserHomepage.manager.getcurrentAlbum().removePhoto(photoindex);
-                        Log.d(TAG, "onClick: Entered delete listener and removed photo from model");
 
                         Toast.makeText(SingleAlbumPage.this, "Photo Successfully Deleted", Toast.LENGTH_SHORT).show();
 
@@ -135,28 +142,67 @@ public class SingleAlbumPage extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
-                        //remove photo at photoindex from current album
+                        LayoutInflater layoutInflaterAndroid = LayoutInflater.from(c);
+                        View mView = layoutInflaterAndroid.inflate(R.layout.activity_create_album_dialogbx, null);
+                        AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(c);
+                        alertDialogBuilderUserInput.setView(mView);
+                        TextView title = (TextView) mView.findViewById(R.id.title);
+                        title.setText("Move Photo");
+                        final EditText albumNameinDialog = (EditText) mView.findViewById(R.id.userInputDialog);
+                        alertDialogBuilderUserInput
+                                .setCancelable(false)
+                                .setPositiveButton("Move", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialogBox, int id) {
+                                        String albumname = albumNameinDialog.getText().toString();
+                                        String photopath = photo_at_pos.getphotoPath();
 
-                        //TODO
-                        /*
-                        UserHomepage.manager.getcurrentAlbum().removePhoto(photoindex);
+                                        //check if album with name exists, and if photo already exists in destination album
+                                        String toastmsg = doesAlbumandPhotoexist(albumname, photopath);
+                                        if(toastmsg != "good"){
+                                            Toast.makeText(getApplicationContext(), toastmsg, Toast.LENGTH_SHORT).show();
+                                            return;
+                                        }
 
+                                        /*At this point, photo is good to be moved*/
+                                        //First, add photo in destination album
+                                        int destinationalbumindex = 0;
+                                        for(int i = 0; i < UserHomepage.manager.getAlbums().size(); i++){
+                                            if(UserHomepage.manager.getAlbums().get(i).getAlbumName().equals(albumname)){
+                                                destinationalbumindex = i;
+                                            }
+                                        }
+                                        UserHomepage.manager.getAlbums().get(destinationalbumindex).addPhoto(photopath);
 
+                                        //Now, delete photo from current album
+                                        UserHomepage.manager.getcurrentAlbum().removePhoto(photoindex);
 
-                        Toast.makeText(SingleAlbumPage.this, "Photo Successfully Deleted", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getApplicationContext(), "Photo Successfully Moved", Toast.LENGTH_SHORT).show();
 
-                        //serialize and refresh list
-                        try {
-                            PhotoAlbumManager.serialize(UserHomepage.manager);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        gridview = (GridView) findViewById(R.id.gridView1);
-                        populatePhotosList();
-                        imageAdapter.notifyDataSetChanged();
-                        gridview.setAdapter(imageAdapter);
-                        //refreshing ends here
-                        */
+                                        //serialize and refresh list
+                                        try {
+                                            PhotoAlbumManager.serialize(UserHomepage.manager);
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                        gridview = (GridView) findViewById(R.id.gridView1);
+                                        populatePhotosList();
+                                        imageAdapter.notifyDataSetChanged();
+                                        gridview.setAdapter(imageAdapter);
+                                        //refreshing ends here
+
+                                    }
+                                })
+
+                                .setNegativeButton("Cancel",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialogBox, int id) {
+                                                dialogBox.cancel();
+                                            }
+                                        });
+
+                        AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
+                        alertDialogAndroid.show();
+
 
                         deletePhotoBtn.setVisibility(View.INVISIBLE); //hide the delete button
                         movePhotoBtn.setVisibility(View.INVISIBLE); //hide the move button
@@ -227,6 +273,21 @@ public class SingleAlbumPage extends AppCompatActivity {
                 //refreshing ends here
             }
         }
+    }
+
+
+    private String doesAlbumandPhotoexist(String albumname, String photopath){
+        for(int i = 0; i < UserHomepage.manager.getAlbums().size(); i++){
+            if(albumname.equals(UserHomepage.manager.getAlbums().get(i).getAlbumName())){
+                for(int j = 0; j < UserHomepage.manager.getAlbums().get(i).getPhotos().size(); j++){
+                    if(UserHomepage.manager.getAlbums().get(i).getPhotos().get(j).getphotoPath().equals(photopath)){
+                        return "Photo Already Exists in Destination Album";
+                    }
+                }
+                return "good";
+            }
+        }
+        return "Album With Entered Name Does Not Exist. First Create Album";
     }
 
 
