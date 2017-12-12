@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -34,7 +35,7 @@ public class Slideshow extends AppCompatActivity {
     private ArrayAdapter<String> tagsAdapter;
     private static List<String> allTags = new ArrayList<String>();
 
-    private TextView tagText;
+    private TextView tagText, filename;
     private Button deleteTagButton;
     private String [] spinnerItems = {"Location", "Person"};
 
@@ -50,14 +51,19 @@ public class Slideshow extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_slideshow);
 
+        //avoids keyboard from automatically popping up at startup
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
         Intent slideShowPageIntent = getIntent();
         this.imagePosition = slideShowPageIntent.getIntExtra("imagePosition", -1);
 
         imageOnSlideShow = (ImageView) findViewById(R.id.imageView);
+        filename = (TextView) findViewById(R.id.filename);
         if(this.imagePosition >= 0){
             // Put image into ImageView
             Album currAlbum = UserHomepage.manager.getcurrentAlbum();
             Photo currPhoto = currAlbum.getPhotos().get(imagePosition);
+            filename.setText(currPhoto.getfileName());
             Uri imgUri = Uri.parse(currPhoto.getphotoPath());
             imageOnSlideShow.setImageURI(imgUri);
 
@@ -101,6 +107,7 @@ public class Slideshow extends AppCompatActivity {
                 //set the imageview of photo
                 Album currAlbum = UserHomepage.manager.getcurrentAlbum();
                 Photo currPhoto = currAlbum.getPhotos().get(currindex);
+                filename.setText(currPhoto.getfileName());
                 Uri imgUri = Uri.parse(currPhoto.getphotoPath());
                 imageOnSlideShow.setImageURI(imgUri);
 
@@ -145,6 +152,7 @@ public class Slideshow extends AppCompatActivity {
                 //set the imageview of photo
                 Album currAlbum = UserHomepage.manager.getcurrentAlbum();
                 Photo currPhoto = currAlbum.getPhotos().get(currindex);
+                filename.setText(currPhoto.getfileName());
                 Uri imgUri = Uri.parse(currPhoto.getphotoPath());
                 imageOnSlideShow.setImageURI(imgUri);
 
