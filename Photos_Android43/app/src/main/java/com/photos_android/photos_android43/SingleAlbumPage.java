@@ -221,10 +221,12 @@ public class SingleAlbumPage extends AppCompatActivity {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-//                Toast.makeText(SingleAlbumPage.this, "" + position,
-//                        Toast.LENGTH_SHORT).show();
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+
+                //set onclicked photo as current photo
+                Photo photo = UserHomepage.manager.getcurrentAlbum().getPhotos().get(position);
+                UserHomepage.manager.getcurrentAlbum().setCurrentPhoto(photo);
+
                 Intent slideShowPageIntent = new Intent(SingleAlbumPage.this, Slideshow.class);
                 slideShowPageIntent.putExtra("imagePosition", position);
                 startActivity(slideShowPageIntent);

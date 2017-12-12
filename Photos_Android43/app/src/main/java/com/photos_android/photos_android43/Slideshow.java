@@ -28,7 +28,7 @@ public class Slideshow extends AppCompatActivity {
     private int spinnerIndexSelected;
 
     private EditText tagEntered;
-    private Button addTagButton;
+    private Button addTagButton, backwardBtn, forwardBtn;
 
     private ListView tagsList;
     private ArrayAdapter<String> tagsAdapter;
@@ -37,6 +37,10 @@ public class Slideshow extends AppCompatActivity {
     private TextView tagText;
     private Button deleteTagButton;
     private String [] spinnerItems = {"Location", "Person"};
+
+    private static Album currAlbum = null;
+    private static int currindex;
+    private static List<Photo> photosInAlbum = new ArrayList<Photo>();
 
     private int imagePosition;
     ImageView imageOnSlideShow;
@@ -57,11 +61,104 @@ public class Slideshow extends AppCompatActivity {
             Uri imgUri = Uri.parse(currPhoto.getphotoPath());
             imageOnSlideShow.setImageURI(imgUri);
 
-            currAlbum.setCurrentPhoto(currPhoto);
+            //currAlbum.setCurrentPhoto(currPhoto);
         }
         else{
             Toast.makeText(getApplicationContext(), "Image Not Found because it's position < 0", Toast.LENGTH_LONG).show();
         }
+
+        backwardBtn = (Button) findViewById(R.id.backwardBtn);
+        forwardBtn = (Button) findViewById(R.id.forwardBtn);
+
+        backwardBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                photosInAlbum.clear();
+                int albumsize = UserHomepage.manager.getcurrentAlbum().getPhotos().size();
+
+                for(int i = 0; i < albumsize; i++) {
+                    photosInAlbum.add(UserHomepage.manager.getcurrentAlbum().getPhotos().get(i));
+                }
+
+                //photosInAlbum now consist of all the photos in current album
+
+                if(currAlbum != UserHomepage.manager.getcurrentAlbum()) { //different album, change of album
+                    currindex = imagePosition;
+                    currAlbum = UserHomepage.manager.getcurrentAlbum();
+                }
+
+                currindex--;
+
+                if(currindex == -1) { //was at the very first pic, cannot go prev anymore after this, set currindex to last pic in album
+                    currindex = albumsize-1;
+                }
+
+                //set the previous pic as the current photo
+                Photo newPhoto = UserHomepage.manager.getcurrentAlbum().getPhotos().get(currindex);
+                UserHomepage.manager.getcurrentAlbum().setCurrentPhoto(newPhoto);
+
+                //set the imageview of photo
+                Album currAlbum = UserHomepage.manager.getcurrentAlbum();
+                Photo currPhoto = currAlbum.getPhotos().get(currindex);
+                Uri imgUri = Uri.parse(currPhoto.getphotoPath());
+                imageOnSlideShow.setImageURI(imgUri);
+
+                //set all the tags of the photo
+                tagsList = (ListView) findViewById(R.id.tagsOfPhotoSlideshow);
+                allTags.clear();
+                allTags.addAll(UserHomepage.manager.getcurrentAlbum().getcurrentPhoto().getAllTags());
+                tagsAdapter.notifyDataSetChanged();
+                tagsList.setAdapter(tagsAdapter);
+
+            }
+        });
+
+        forwardBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                photosInAlbum.clear();
+                int albumsize = UserHomepage.manager.getcurrentAlbum().getPhotos().size();
+
+                for(int i = 0; i < albumsize; i++) {
+                    photosInAlbum.add(UserHomepage.manager.getcurrentAlbum().getPhotos().get(i));
+                }
+
+                //photosInAlbum now consist of all the photos in current album
+
+                if(currAlbum != UserHomepage.manager.getcurrentAlbum()) { //different album, change of album
+                    currindex = imagePosition;
+                    currAlbum = UserHomepage.manager.getcurrentAlbum();
+                }
+
+                currindex++;
+
+                if(currindex == albumsize) { //was at the very last pic, cannot go next anymore after this, so set currindex to first image
+                    currindex = 0;
+                }
+
+                //set the next pic as the current photo
+                Photo newPhoto = UserHomepage.manager.getcurrentAlbum().getPhotos().get(currindex);
+                UserHomepage.manager.getcurrentAlbum().setCurrentPhoto(newPhoto);
+
+                //set the imageview of photo
+                Album currAlbum = UserHomepage.manager.getcurrentAlbum();
+                Photo currPhoto = currAlbum.getPhotos().get(currindex);
+                Uri imgUri = Uri.parse(currPhoto.getphotoPath());
+                imageOnSlideShow.setImageURI(imgUri);
+
+                //set all the tags of the photo
+                tagsList = (ListView) findViewById(R.id.tagsOfPhotoSlideshow);
+                allTags.clear();
+                allTags.addAll(UserHomepage.manager.getcurrentAlbum().getcurrentPhoto().getAllTags());
+                tagsAdapter.notifyDataSetChanged();
+                tagsList.setAdapter(tagsAdapter);
+
+            }
+        });
+
+
 
         //TODO Serialize
         tagsList = (ListView) findViewById(R.id.tagsOfPhotoSlideshow);
